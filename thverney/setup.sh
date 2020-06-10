@@ -9,12 +9,11 @@ minikube addons enable ingress
 minikube addons enable dashboard
 
 eval $(minikube docker-env)
-docker build -t nginx_alpine srcs/
+docker build -t nginx_alpine srcs/nginx/
+docker build -t mysql_alpine srcs/mysql/
 
-kubectl apply -f srcs/ingress.yaml
+
 kubectl apply -f srcs/nginx-deployment.yaml
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
-
-
-
-
+kubectl apply -f srcs/ingress.yaml
+kubectl apply -f srcs/mysql.yaml
+kubectl apply -f srcs/wordpress.yaml
