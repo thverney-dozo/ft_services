@@ -8,14 +8,20 @@ minikube start --cpus=2 --memory 4000
 minikube addons enable ingress
 minikube addons enable dashboard
 
+printf "✓	Minikube start successful\n"
+
 eval $(minikube docker-env)
+
 docker build -t nginx_alpine srcs/nginx/
 docker build -t mysql_alpine srcs/mysql/
 docker build -t wordpress_alpine srcs/wordpress/
 
+printf "✓   All docker build successful\n"
 
 kubectl apply -f srcs/nginx-deployment.yaml
 kubectl apply -f srcs/ingress.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/wordpress.yaml
+
+printf "✓  All yaml successfuly applied\n"

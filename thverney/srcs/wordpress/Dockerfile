@@ -8,11 +8,11 @@ WORKDIR /scripts
 
 RUN wget https://wordpress.org/latest.tar.gz \
 && tar -xvf latest.tar.gz \
-&& mv wordpress/* /www \
+&& mv wordpress/ /var/www/localhost/htdocs/
 && rm -rf /var/cache/apk/*
 
 COPY scripts/start.sh start.sh
-COPY files/wp-config.php ${APACHE_SERVER_PATH}/wp-config.php
+COPY files/wp-config.php /var/www/localhost/htdocs/wp-config.php
 
 EXPOSE 80
 
