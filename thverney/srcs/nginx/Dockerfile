@@ -11,5 +11,7 @@ ADD default.conf /etc/nginx/default.conf
 ADD cert.pem /etc/nginx/ssl
 ADD key.pem /etc/nginx/ssl
 
+EXPOSE 4000 80 443
+
 CMD nginx -t \
 && nginx -g 'daemon off;'
