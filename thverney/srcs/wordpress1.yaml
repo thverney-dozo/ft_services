@@ -52,14 +52,14 @@ spec:
         imagePullPolicy: Never
         name: wordpress
         env:
-        - name: DB_HOST
-          value: mysql
-        - name: DB_USER
-          value: root
-        - name: DB_PASSWORD
-          value: password
-        - name: DB_NAME
-          value: wordpress
+          - name: DB_NAME
+            value: wordpress
+          - name: DB_USER
+            value: wp_admin
+          - name: DB_PASSWORD
+            value: admin
+          - name: DB_HOST
+            value: mysql-svc
         ports:
         - containerPort: 80
           name: wordpress

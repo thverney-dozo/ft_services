@@ -9,6 +9,7 @@ spec:
     - port: 3306
   selector:
     app: mysql
+    tier: mysql
   clusterIP: None
 ---
 apiVersion: v1
@@ -31,18 +32,18 @@ metadata:
   labels:
     app: mysql
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: mysql
+      tier: mysql
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: mysql
+        tier: mysql
     spec:
-      restartPolicy: Always
       containers:
       - image: mysql_alpine
         imagePullPolicy: Never

@@ -17,9 +17,9 @@ RUN unzip -q wordpress-4.9.6.zip -d ./ && \
         chown -R apache:apache /var/www/localhost/htdocs && \
         apk del .build-deps
 
-COPY scripts/run.sh run.sh
+COPY scripts/start.sh start.sh
 COPY wp-config.php /var/www/localhost/htdocs/wp-config.php
 
 EXPOSE 80
 
-ENTRYPOINT [ "./run.sh" ]
+ENTRYPOINT [ "./start.sh" ]
