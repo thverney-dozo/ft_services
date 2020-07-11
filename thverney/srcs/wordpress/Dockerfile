@@ -6,14 +6,20 @@ RUN mkdir -p /run/apache2 /run/httpd
 
 WORKDIR /scripts
 
-RUN wget https://wordpress.org/latest.tar.gz \
-&& tar -xvf latest.tar.gz \
-&& mv wordpress/ /var/www/localhost/htdocs/
-&& rm -rf /var/cache/apk/*
+ADD https://wordpress.org/wordpress-4.9.6.zip ./
+RUN unzip -q wordpress-4.9.6.zip -d ./ && \
+        rm -rf /var/www/localhost/htdocs && \
+        mv wordpress/ /var/www/localhost/htdocs && \
+        rm /scripts/wordpress-4.9.6.zip \
+            /var/www/localhost/htdocs/wp-config-sample.php \
+            /var/www/localhost/htdocs/license.txt \
+            /var/www/localhost/htdocs/readme.html && \
+        chown -R apache:apache /var/www/localhost/htdocs && \
+        apk del .build-deps
 
-COPY scripts/start.sh start.sh
-COPY files/wp-config.php /var/www/localhost/htdocs/wp-config.php
+COPY scripts/run.sh run.sh
+COPY wp-config.php /var/www/localhost/htdocs/wp-config.php
 
 EXPOSE 80
 
-ENTRYPOINT [ "./start.sh" ]
+ENTRYPOINT [ "./run.sh" ]
