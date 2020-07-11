@@ -1,7 +1,5 @@
 #!/bin/bash
 
-minikube delete
-
 minikube config set vm-driver virtualbox
 
 minikube start --cpus=2 --memory 4000 --disk-size 11000 --extra-config=apiserver.service-node-port-range=1-35000
