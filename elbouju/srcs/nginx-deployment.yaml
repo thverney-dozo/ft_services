@@ -12,6 +12,10 @@ spec:
       port: 80
       targetPort: 80
       protocol: TCP
+  selector:
+      app: nginx
+      tier: frontend
+  type: LoadBalancer
 ---
 kind: Service
 apiVersion: v1

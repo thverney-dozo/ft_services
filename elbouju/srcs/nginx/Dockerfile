@@ -12,4 +12,6 @@ ADD cert.pem /etc/nginx/ssl
 ADD key.pem /etc/nginx/ssl
 
 CMD nginx -t \
-&& nginx -g 'daemon off;'
+&& nginx -g 'daemon off;
+
+EXPOSE 80
