@@ -13,4 +13,4 @@ sed -i "s/define('DB_PASSWORD', null);/define('DB_PASSWORD', '${WORDPRESS_DB_PAS
 sed -i "s/define('DB_HOST', null);/define('DB_HOST', '${WORDPRESS_DB_HOST}');/" /var/www/localhost/htdocs/wp-config.php
 
 echo "Starting all process ..."
-exec httpd -DFOREGROUND
+exec httpd -DFOREGROUND "$@"

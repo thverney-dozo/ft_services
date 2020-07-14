@@ -5,11 +5,11 @@ metadata:
   name: phpmyadmin
 spec:
   ports:
-    - port: 80
-      nodePort: 5000
+    - port: 32500
+      targetPort: 5000
   selector:
     app: phpmyadmin
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
