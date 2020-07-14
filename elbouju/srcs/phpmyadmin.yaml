@@ -5,8 +5,9 @@ metadata:
   name: phpmyadmin
 spec:
   ports:
-    - port: 32500
-      targetPort: 5000
+    - name: http
+      port: 5000
+      targetPort: 80
   selector:
     app: phpmyadmin
   type: LoadBalancer
@@ -31,7 +32,8 @@ spec:
         - name: phpmyadmin
           image: etopian/phpmyadmin
           ports:
-            - containerPort: 80
+            - containerPort: 5000
+              name: http
           env:
             - name: MYSQL_HOSTNAME
               value: mysql

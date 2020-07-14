@@ -6,10 +6,10 @@ metadata:
     app: wordpress
 spec:
   ports:
-    - port: 32505
-      targetPort: 5050
+    - name: http
+      port: 5050
+      targetPort: 80
       protocol: TCP
-      name: http
   selector:
     app: wordpress
     tier: frontend
@@ -62,7 +62,7 @@ spec:
           value: wordpress
         ports:
         - containerPort: 80
-          name: wordpress
+          name: http
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html

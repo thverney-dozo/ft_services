@@ -31,17 +31,17 @@ define( 'DB_PASSWORD', 'password' );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'mysql' );
-
+/*
 define('WP_HOME', 'http://AAAIPAAA:5050' );
 define('WP_SITEURL', 'http://AAAIPAAA:5050' );
-
+*/
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
-define('AUTHOR', 'thverney');
+define('AUTHOR', 'elbouju');
 
 /**#@+
  * Authentication Unique Keys and Salts.

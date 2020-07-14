@@ -17,10 +17,11 @@ docker build -t wordpress_alpine srcs/wordpress/
 printf "✓   All docker build successful\n"
 
 kubectl apply -f srcs/metallb.yaml
-kubectl create -f srcs/metallb-config.yaml
+kubectl apply -f srcs/metallb-config.yaml
 kubectl describe cm config -n metallb-system
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 kubectl apply -f srcs/nginx-deployment.yaml
+kubectl apply -f srcs/mysql-volume.yaml
 kubectl apply -f srcs/mysql.yaml
 kubectl apply -f srcs/phpmyadmin.yaml
 kubectl apply -f srcs/wordpress.yaml
