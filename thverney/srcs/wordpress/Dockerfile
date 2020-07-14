@@ -1,25 +1,17 @@
 FROM alpine:latest
 
-RUN apk add --no-cache --virtual .build-deps unzip
-RUN apk add --no-cache apache2 php7 php7-apache2 php7-openssl php7-xml php7-pdo php7-mcrypt php7-session php7-mysqli php7-zlib su-exec
-RUN mkdir -p /run/apache2 /run/httpd
+RUN apk update && apk add wget && mkdir /www \
+&& apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session
 
-WORKDIR /scripts
+RUN wget https://wordpress.org/latest.tar.gz \
+&& tar -xvf latest.tar.gz \
+&& mv wordpress/* /www \
+&& rm -rf /var/cache/apk/*
 
-ADD https://wordpress.org/wordpress-4.9.6.zip ./
-RUN unzip -q wordpress-4.9.6.zip -d ./ && \
-        rm -rf /var/www/localhost/htdocs && \
-        mv wordpress/ /var/www/localhost/htdocs && \
-        rm /scripts/wordpress-4.9.6.zip \
-            /var/www/localhost/htdocs/wp-config-sample.php \
-            /var/www/localhost/htdocs/license.txt \
-            /var/www/localhost/htdocs/readme.html && \
-        chown -R apache:apache /var/www/localhost/htdocs && \
-        apk del .build-deps
+COPY wp-config.php /www/wp-config.php
+COPY start.sh .
 
-COPY scripts/start.sh start.sh
-COPY wp-config.php /var/www/localhost/htdocs/wp-config.php
+RUN chmod 777 start.sh
 
-EXPOSE 80
-
-ENTRYPOINT [ "./start.sh" ]
+EXPOSE 5050
+CMD ./start.sh

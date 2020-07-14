@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-service
+  name: nginx
   labels:
     app: nginx
 spec:
@@ -10,14 +10,14 @@ spec:
     app: nginx
   ports:
     - name: http
-      port: 32080
+      port: 80
       targetPort: 80
       protocol: TCP
     - name: ssh
-      port: 32400
+      port: 4000
       targetPort: 4000
     - name: https
-      port: 32443
+      port: 443
       targetPort: 443
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2

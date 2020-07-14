@@ -32,16 +32,11 @@ define( 'DB_PASSWORD', 'password' );
 /** MySQL hostname */
 define( 'DB_HOST', 'mysql' );
 
-define('WP_HOME', 'http://AAAIPAAA:5050' );
-define('WP_SITEURL', 'http://AAAIPAAA:5050' );
-
 /** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
+define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
-
-define('AUTHOR', 'thverney');
+define('DB_COLLATE', '');
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -52,14 +47,14 @@ define('AUTHOR', 'thverney');
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
-define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
-define( 'NONCE_KEY',        'put your unique phrase here' );
-define( 'AUTH_SALT',        'put your unique phrase here' );
-define( 'SECURE_AUTH_SALT', 'put your unique phrase here' );
-define( 'LOGGED_IN_SALT',   'put your unique phrase here' );
-define( 'NONCE_SALT',       'put your unique phrase here' );
+define('AUTH_KEY',         'xTnP0@p&bj,rU(2`_>:TsJ|N7S2@X^rJ<zv#t9Gdi3q3,.<J!+|2hR7ul1[e@][+');
+define('SECURE_AUTH_KEY',  '0tw71by|es&u05C)z%;>y|8A|;P[3Z7bMj=-+^d})2ji7w[Y1E3/yA@z@eK`o/EI');
+define('LOGGED_IN_KEY',    'tbbYQ8X`Uz>z@UXH?S&]<qxv%[bV?j3AM=zjCfP(aow`(s |*qn`-h[)Cxk>cxSw');
+define('NONCE_KEY',        '~|biU<[<hY}+A].(ETpIta4aOLK,*XikuO$.|5 <xepny#[+9AF K>v]pD,@6fMO');
+define('AUTH_SALT',        'pbn!Y$X(I*ma$=] @^v;A[Blr/;=[g^X-/_}u?#dSbd%B4HD PGFw{V;W:9b]sE|');
+define('SECURE_AUTH_SALT', 'a^< xY{ZFRiDpwpr16Jn+F[~%>O?+>81ypOSK?s,Sf|&?L-%:9O2Y!G`m8CA]U~l');
+define('LOGGED_IN_SALT',   '^oFC&(>*naPi=F@toQd(I8b43D!~FjX=f^)G2<&(3LzfuDKQm9G#j+y&Beh=EDbi');
+define('NONCE_SALT',       'FW#Ik IhkHA1B`468;n(#AOFs~laFid]Fm{I{}*Z~r;:L; v;T^XIn|cVgtyv`>j');
 
 /**#@-*/
 
