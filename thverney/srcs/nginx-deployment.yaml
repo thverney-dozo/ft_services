@@ -1,39 +1,24 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  selector:
-    app: nginx
-  ports:
-    - name: http
-      port: 80
-      targetPort: 80
-      protocol: TCP
-  selector:
-      app: nginx
-      tier: frontend
-  type: LoadBalancer
----
-kind: Service
-apiVersion: v1
-metadata:
   name: nginx-service
   labels:
     app: nginx
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: nginx
   ports:
+    - name: http
+      port: 32080
+      targetPort: 80
+      protocol: TCP
     - name: ssh
-      port: 4000
-      nodePort: 4000
+      port: 32400
+      targetPort: 4000
     - name: https
-      nodePort: 443
-      port: 443
+      port: 32443
+      targetPort: 443
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment

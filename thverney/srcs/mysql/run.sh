@@ -10,7 +10,7 @@ else
 	echo "[i] MySQL data directory not found, creating initial DBs"
 
 	echo 'Initializing database'
-	mysql_install_db --user=mysql > /dev/null
+	mysql_install_db --user=root > /dev/null
 	echo 'Database initialized'
 
 	echo "[i] MySql root password: $MYSQL_ROOT_PASSWORD"
@@ -23,13 +23,13 @@ else
 	echo "[i] Create temp file: $tfile"
 	cat << EOF > $tfile
 FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO "$MYSQL_ROOT"@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
 EOF
 
 	echo 'FLUSH PRIVILEGES;' >> $tfile
 
 	echo "[i] run tempfile: $tfile"
-	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 < $tfile
+	/usr/bin/mysqld --user=root --bootstrap --verbose=0 < $tfile
 	rm -f $tfile
 fi
 
@@ -37,4 +37,4 @@ echo "[i] Sleeping 5 sec"
 sleep 5
 
 echo '[i] start running mysqld'
-exec /usr/bin/mysqld --user=mysql --console
+exec /usr/bin/mysqld --user=root --console
