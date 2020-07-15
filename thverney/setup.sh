@@ -12,6 +12,7 @@ eval $(minikube docker-env)
 
 docker build -t nginx_alpine srcs/nginx/
 docker build -t mysql_alpine srcs/mysql/
+docker build -t phpmyadmin_alpine srcs/phpmyadmin/
 docker build -t wordpress_alpine srcs/wordpress/
 
 printf "✓   All docker build successful\n"

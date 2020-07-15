@@ -7,7 +7,7 @@ spec:
   ports:
     - name: http
       port: 5000
-      targetPort: 80
+      targetPort: 5000
   selector:
     app: phpmyadmin
   type: LoadBalancer
@@ -29,15 +29,15 @@ spec:
         app: phpmyadmin
     spec:
       containers:
-        - name: phpmyadmin
-          image: etopian/phpmyadmin
-          ports:
-            - containerPort: 5000
-              name: http
-          env:
-            - name: MYSQL_HOSTNAME
-              value: mysql
-            - name: PMA_USERNAME
-              value: root
-            - name: PMA_PASSWORD
-              value: password
+      - name: phpmyadmin
+        image: phpmyadmin_alpine
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Never
+        env:
+          - name: PMA_HOST
+            value: mysql-svc
+          - name: PMA_PORT
+            value: "3306"
+          - name: PMA_USER
+            value: root
