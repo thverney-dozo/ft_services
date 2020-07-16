@@ -36,8 +36,10 @@ spec:
         imagePullPolicy: Never
         env:
           - name: PMA_HOST
-            value: mysql-svc
+            value: mysql
           - name: PMA_PORT
             value: "3306"
           - name: PMA_USER
             value: root
+          - name: MYSQL_ROOT_PASSWORD
+            value: password 

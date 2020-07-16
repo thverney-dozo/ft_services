@@ -3,7 +3,7 @@
 $cfg['blowfish_secret'] = '';
 
 /**
- *  List of env variables 
+ * List of env variables
  */
 $vars = array(
     'PMA_HOST',
@@ -13,7 +13,7 @@ $vars = array(
 );
 
 /**
- *  Stock env variables in tab 
+ * Stock env variables in tab
  */
 foreach ($vars as $var) {
     $env = getenv($var);
@@ -23,23 +23,30 @@ foreach ($vars as $var) {
 }
 
 /**
- * Only one server 
+ * Only one server
  */
 $i = 1;
 
-/*  Authentication type  */
+/* Authentication type */
 $cfg['Servers'][$i]['auth_type'] = 'cookie';
-/*  Server parameters  */
+/* Server parameters */
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
 /**
- *  Variable definition 
+ * Variable definition
  */
-$cfg['Servers'][$i]['host'] = "mysql-service";
-$cfg['Servers'][$i]['port'] = "3306";
-$cfg['Servers'][$i]['user'] = "user";
-$cfg['Servers'][$i]['password'] = "password";
+if (!empty($_ENV['PMA_HOST']))
+	$cfg['Servers'][$i]['host'] = $_ENV['PMA_HOST'];
+
+if (!empty($_ENV['PMA_PORT']))
+	$cfg['Servers'][$i]['port'] = $_ENV['PMA_PORT'];
+
+if (!empty($_ENV['PMA_USER']))
+	$cfg['Servers'][$i]['user'] = $_ENV['PMA_USER'];
+
+if (!empty($_ENV['MYSQL_ROOT_PASSWORD']))
+	$cfg['Servers'][$i]['password'] = $_ENV['MYSQL_ROOT_PASSWORD'];
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';

@@ -13,6 +13,6 @@ COPY start.sh .
 
 RUN chmod 777 start.sh
 
-EXPOSE 80 5000
+EXPOSE 5000
 
 CMD ./start.sh
