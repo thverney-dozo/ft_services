@@ -6,7 +6,7 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 80
+      port: 5000
       targetPort: 5000
   selector:
     app: phpmyadmin
@@ -32,11 +32,11 @@ spec:
       - name: phpmyadmin
         image: phpmyadmin_alpine
         ports:
-        - containerPort: 80
+        - containerPort: 5000
         imagePullPolicy: Never
         env:
           - name: PMA_HOST
-            value: mysql
+            value: 172.17.0.10
           - name: PMA_PORT
             value: "3306"
           - name: PMA_USER
