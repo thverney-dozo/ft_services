@@ -1,3 +1,6 @@
 #!/bin/sh
-sed -i "s/AAAIPAAA/$IP/g" /www/wp-config.php
-php -S 0.0.0.0:5050 -t /www/
+mysql -h $WORDPRESS_DB_HOST -u $WORDPRESS_DB_USER --password=$WORDPRESS_DB_PASSWORD
+
+docker-entrypoint.sh php-fpm
+
+/usr/sbin/nginx && /usr/local/sbin/php-fpm
