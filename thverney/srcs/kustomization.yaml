@@ -1,0 +1,6 @@
+resources: 
+- metallb-config.yaml
+- mysql.yaml
+- nginx-deployment.yaml
+- phpmyadmin.yaml
+- wordpress.yaml

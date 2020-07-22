@@ -1,6 +1,17 @@
 #!/bin/sh
-mysql -h $WORDPRESS_DB_HOST -u $WORDPRESS_DB_USER --password=$WORDPRESS_DB_PASSWORD
+mkdir /run/nginx
+touch /run/nginx/nginx.pid
+/usr/sbin/nginx
 
-docker-entrypoint.sh php-fpm
+echo "User: " $WORDPRESS_DB_USER;
+echo "Host: " $WORDPRESS_DB_HOST;
+echo "Password: " $WORDPRESS_DB_PASSWORD;
+mysql -u $WORDPRESS_DB_USER -h $WORDPRESS_DB_HOST -p$WORDPRESS_DB_PASSWORD -e 'CREATE DATABASE IF NOT EXISTS wordpress';
+while [ $? != 0 ]
+do
+    sleep 2 ;
+    echo "Command failed with error code: " $?;
+    mysql -u $WORDPRESS_DB_USER -h $WORDPRESS_DB_HOST -p$WORDPRESS_DB_PASSWORD
+done
 
-/usr/sbin/nginx && /usr/local/sbin/php-fpm
+php-fpm7 -F

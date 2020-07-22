@@ -23,11 +23,12 @@ printf "${RED}✓   All docker build successful${NC}\n"
 
 # DESCRIBE='kubectl describe cm config -n metallb-system'
 
-kubectl apply -f srcs/metallb-config.yaml
+kubectl apply -k srcs
 kubectl describe cm config -n metallb-system
-kubectl apply -f srcs/nginx-deployment.yaml
-kubectl apply -f srcs/mysql.yaml
-kubectl apply -f srcs/phpmyadmin.yaml
-kubectl apply -f srcs/wordpress.yaml
+# kubectl apply -f srcs/metallb-config.yaml
+# kubectl apply -f srcs/nginx-deployment.yaml
+# kubectl apply -f srcs/mysql.yaml
+# kubectl apply -f srcs/phpmyadmin.yaml
+# kubectl apply -f srcs/wordpress.yaml
 
 printf "${RED}✓  All yaml successfuly applied${NC}\n"

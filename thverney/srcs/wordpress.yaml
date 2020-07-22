@@ -6,7 +6,7 @@ metadata:
     app: wordpress
 spec:
   ports:
-  - port: 80
+  - port: 5050
   selector:
     app: wordpress
     tier: wordpress
@@ -51,7 +51,7 @@ spec:
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
-          value: mysql
+          value: 172.17.0.9
         - name: WORDPRESS_DB_USER
           value: root
         - name: WORDPRESS_DB_PASSWORD
@@ -59,8 +59,7 @@ spec:
         - name: WORDPRESS_DB_NAME
           value: wordpress
         ports:
-        - containerPort: 80
-          hostPort: 5050
+        - containerPort: 5050
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html

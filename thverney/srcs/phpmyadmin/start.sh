@@ -4,8 +4,8 @@ mysql -u $PMA_USER -h $PMA_HOST -p$MYSQL_ROOT_PASSWORD
 while [ $? != 0 ]
 do
     echo "Command failed with error code: " $?;
-    mysql -u $PMA_USER -h $PMA_HOST -p$MYSQL_ROOT_PASSWORD;
     sleep 2 ;
+    mysql -u $PMA_USER -h $PMA_HOST -p$MYSQL_ROOT_PASSWORD;
 done
 # php7-fpm
 echo "Successfully accessed mysql";
