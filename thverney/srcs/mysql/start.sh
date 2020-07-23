@@ -1,48 +1,12 @@
 #!/bin/sh
 
-if [ ! -d "/run/mysqld" ]; then
-	mkdir -p /run/mysqld
-	# chown -R mysql:mysql /run/mysqld
-fi
+mkdir -p /run/mysqld
+mysql_install_db --user=$MYSQL_USER --basedir=/usr
 
-if [ -d /var/lib/mysql/mysql ]; then
-	echo '[i] MySQL directory already present, skipping creation'
-else
-	echo "[i] MySQL data directory not found, creating initial DBs"
-
-	# chown -R mysql:mysql /var/lib/mysql
-
-	# init database
-	echo 'Initializing database'
-	mysql_install_db --user=root > /dev/null
-	echo 'Database initialized'
-
-	echo "[i] MySql root password: $MYSQL_ROOT_PASSWORD"
-
-	# create temp file
-	tfile=`mktemp`
-	if [ ! -f "$tfile" ]; then
-		return 1
-	fi
-
-	# save sql
-	echo "[i] Create temp file: $tfile"
-	cat << EOF > $tfile
+cat << EOF > admin.sql
+CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
 EOF
-
-	echo 'FLUSH PRIVILEGES;' >> $tfile
-
-	# run sql in tempfile
-	echo "[i] run tempfile: $tfile"
-	/usr/bin/mysqld --user=root --bootstrap --verbose=0 < $tfile
-	rm -f $tfile
-fi
-
-echo "[i] Sleeping 5 sec"
-sleep 5
-
-echo '[i] start running mysqld'
-exec /usr/bin/mysqld --user=root --console
-# /bin/sh
+mysqld --user=$MYSQL_USER --bootstrap --verbose=0 --skip-grant-tables=0 < admin.sql
+exec /usr/bin/mysqld --user=$MYSQL_USER --console
