@@ -10,6 +10,7 @@ spec:
       targetPort: 5000
   selector:
     app: phpmyadmin
+    tier: phpmyadmin
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -23,10 +24,12 @@ spec:
   selector:
     matchLabels:
       app: phpmyadmin
+      tier: phpmyadmin
   template:
     metadata:
       labels:
         app: phpmyadmin
+        tier: phpmyadmin
     spec:
       containers:
       - name: phpmyadmin

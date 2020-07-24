@@ -7,9 +7,8 @@ do
     sleep 2 ;
     mysql -u $PMA_USER -h $PMA_HOST -p$MYSQL_ROOT_PASSWORD;
 done
-php-fpm7 -F
 echo "Successfully accessed mysql";
 echo "User: " $PMA_USER;
 echo "Host: " $PMA_HOST;
 echo "PAssword: " $MYSQL_ROOT_PASSWORD;
-php -S 0.0.0.0:5000 -t /www/
+php-fpm7 -F
