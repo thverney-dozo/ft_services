@@ -3,11 +3,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: phpmyadmin
+  labels:
+    app: phpmyadmin
 spec:
   ports:
-    - name: http
-      port: 5000
-      targetPort: 5000
+  - port: 5000
   selector:
     app: phpmyadmin
     tier: phpmyadmin
@@ -20,6 +20,8 @@ metadata:
   labels:
     app: phpmyadmin
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -31,12 +33,12 @@ spec:
         app: phpmyadmin
         tier: phpmyadmin
     spec:
+      restartPolicy: Always
       containers:
       - name: phpmyadmin
         image: phpmyadmin_alpine
-        ports:
-        - containerPort: 5000
         imagePullPolicy: Never
+        env:
         env:
           - name: PMA_HOST
             value: mysql
@@ -45,4 +47,6 @@ spec:
           - name: PMA_USER
             value: root
           - name: MYSQL_ROOT_PASSWORD
-            value: password 
+            value: password
+        ports:
+        - containerPort: 5000

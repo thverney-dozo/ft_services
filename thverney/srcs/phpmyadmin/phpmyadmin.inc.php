@@ -36,17 +36,10 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /**
  * Variable definition
  */
-if (!empty($_ENV['PMA_HOST']))
-	$cfg['Servers'][$i]['host'] = $_ENV['PMA_HOST'];
-
-if (!empty($_ENV['PMA_PORT']))
-	$cfg['Servers'][$i]['port'] = $_ENV['PMA_PORT'];
-
-if (!empty($_ENV['PMA_USER']))
-	$cfg['Servers'][$i]['user'] = $_ENV['PMA_USER'];
-
-if (!empty($_ENV['MYSQL_ROOT_PASSWORD']))
-	$cfg['Servers'][$i]['password'] = $_ENV['MYSQL_ROOT_PASSWORD'];
+$cfg['Servers'][$i]['host'] = "mysql";
+$cfg['Servers'][$i]['port'] = "3306";
+$cfg['Servers'][$i]['user'] = "root";
+$cfg['Servers'][$i]['password'] = "password";
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
