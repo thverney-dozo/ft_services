@@ -11,7 +11,8 @@ echo "Successfully accessed mysql";
 echo "User: " $PMA_USER;
 echo "Host: " $PMA_HOST;
 echo "PAssword: " $MYSQL_ROOT_PASSWORD;
-php-fpm7 & nginx
+# php-fpm7 -F /www/ & nginx
+php -S 0.0.0.0:5000 -t /www/
 # /usr/sbin/nginx
 # php-fpm7 -F /www/
 echo "wtf"
