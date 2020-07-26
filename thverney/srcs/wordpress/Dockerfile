@@ -11,8 +11,11 @@ RUN wget https://fr.wordpress.org/latest-fr_FR.tar.gz \
 && tar -xvf latest-fr_FR.tar.gz
 RUN mv wordpress /var/www/.
 
+RUN touch /wordpress-dump.sql
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod 777 /etc/nginx/nginx.conf
-COPY start.sh /bin/start.sh
+COPY start.sh start.sh
+COPY wp-config.php /var/www/wp-config.php
 
-ENTRYPOINT ["/bin/start.sh"]
+
+ENTRYPOINT ["/start.sh"]
