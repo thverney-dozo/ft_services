@@ -44,9 +44,9 @@ spec:
         name: nginx
         env:
         - name: SSH_USER
-          value: admin
+          value: root
         - name: SSH_PASSWORD
-          value: admin
+          value: password
         ports:
         - containerPort: 80
           name: http
