@@ -14,11 +14,13 @@ spec:
       targetPort: 80
       protocol: TCP
     - name: ssh
-      port: 4000
-      targetPort: 4000
+      port: 22
+      targetPort: 22
+      protocol: TCP
     - name: https
       port: 443
       targetPort: 443
+      protocol: TCP
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -42,15 +44,10 @@ spec:
       - image: nginx_alpine
         imagePullPolicy: Never
         name: nginx
-        env:
-        - name: SSH_USER
-          value: root
-        - name: SSH_PASSWORD
-          value: password
         ports:
         - containerPort: 80
           name: http
         - containerPort: 443
           name: https
-        - containerPort: 4000
+        - containerPort: 22
           name: ssh

@@ -21,8 +21,6 @@ docker build -t wordpress_alpine srcs/wordpress/
 printf "${RED}✓   All docker build successful${NC}\n"
 
 
-# DESCRIBE='kubectl describe cm config -n metallb-system'
-
 kubectl apply -k srcs
 kubectl describe cm config -n metallb-system
 # kubectl apply -f srcs/metallb-config.yaml
@@ -30,5 +28,9 @@ kubectl describe cm config -n metallb-system
 # kubectl apply -f srcs/mysql.yaml
 # kubectl apply -f srcs/phpmyadmin.yaml
 # kubectl apply -f srcs/wordpress.yaml
+# kubectl delete --all deployments
+# kubectl delete --all pods
+# kubectl delete --all services
+# kubectl delete --all pvc
 
 printf "${RED}✓  All yaml successfuly applied${NC}\n"
