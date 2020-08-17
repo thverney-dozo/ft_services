@@ -18,6 +18,9 @@ docker build -t nginx_alpine srcs/nginx/
 docker build -t mysql_alpine srcs/mysql/
 docker build -t phpmyadmin_alpine srcs/phpmyadmin/
 docker build -t wordpress_alpine srcs/wordpress/
+docker build -t grafana_alpine srcs/grafana/
+docker build -t ftps_alpine srcs/ftps
+docker build -t influxdb_alpine srcs/influxdb/
 printf "${RED}✓   All docker build successful${NC}\n"
 
 

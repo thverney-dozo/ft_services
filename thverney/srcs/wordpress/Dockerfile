@@ -11,6 +11,14 @@ RUN wget https://fr.wordpress.org/latest-fr_FR.tar.gz \
 && tar -xvf latest-fr_FR.tar.gz
 RUN mv wordpress /var/www/.
 
+RUN mkdir /etc/telegraf \
+&& wget https://dl.influxdata.com/telegraf/releases/telegraf-1.13.3-static_linux_amd64.tar.gz \
+&& tar -C . -xzf telegraf-1.13.3-static_linux_amd64.tar.gz \
+&& chmod 775 telegraf/* \
+&& cp telegraf/telegraf /usr/bin/ \
+&& rm -rf /var/cache/apk/*
+COPY telegraf.conf /etc/telegraf/telegraf.conf
+
 RUN touch /wordpress-dump.sql
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod 777 /etc/nginx/nginx.conf

@@ -4,3 +4,6 @@ resources:
 - nginx.yaml
 - phpmyadmin.yaml
 - wordpress.yaml
+- grafana.yaml
+- ftps.yaml
+- influxdb.yaml

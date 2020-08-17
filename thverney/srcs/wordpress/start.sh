@@ -29,4 +29,5 @@ mysql -u $WORDPRESS_DB_USER -h $WORDPRESS_DB_HOST -p$WORDPRESS_DB_PASSWORD wordp
 echo "je comprends r";
 
 /usr/sbin/nginx
+telegraf &
 php-fpm7 -F

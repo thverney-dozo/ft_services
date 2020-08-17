@@ -14,6 +14,14 @@ RUN tar -xvf phpMyAdmin-4.9.0.1-all-languages.tar.gz
 RUN mv phpMyAdmin-4.9.0.1-all-languages /www
 RUN rm -rf /var/cache/apk/*
 
+RUN mkdir /etc/telegraf \
+&& wget https://dl.influxdata.com/telegraf/releases/telegraf-1.13.3-static_linux_amd64.tar.gz \
+&& tar -C . -xzf telegraf-1.13.3-static_linux_amd64.tar.gz \
+&& chmod 775 telegraf/* \
+&& cp telegraf/telegraf /usr/bin/ \
+&& rm -rf /var/cache/apk/*
+COPY telegraf.conf /etc/telegraf/telegraf.conf
+
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod 777 /etc/nginx/nginx.conf
 COPY phpmyadmin.inc.php /www/config.inc.php
