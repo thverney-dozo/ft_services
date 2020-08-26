@@ -50,6 +50,14 @@ spec:
       containers:
       - name: influxdb
         image: influxdb_alpine
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - pidof telegraf
+          initialDelaySeconds: 30
+          periodSeconds: 2
         imagePullPolicy: Never
         securityContext:
           privileged: true

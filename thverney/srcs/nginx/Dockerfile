@@ -1,22 +1,37 @@
-FROM alpine:latest
+FROM alpine
 
-RUN apk update && apk add nginx \
-&& apk add --no-cache --upgrade bash \
-&& apk add openssl && mkdir -p var/run/nginx \
-&& apk add openssl openssh \
+RUN apk update \
+&& apk add bash sed
+
+# nginx setup
+RUN apk add nginx \
+&& adduser -D -g 'www' www \
+&& mkdir /www \
+&& chown -R www:www /var/lib/nginx \
+&& mkdir /run/nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# ssl setup
+RUN apk add openssl \
+&& touch /etc/nginx/openssl.cnf \
+&& cp /etc/ssl/openssl.cnf /etc/nginx/openssl.cnf \
+&& mkdir -p /etc/ssl/private \
+&& mkdir -p /etc/ssl/certs \
 && rm -rf /var/cache/apk/* \
-&& apk add --update openssh
+&& openssl req \
+  -x509 -nodes -days 3650 -newkey rsa:2048 \
+  -subj "/CN=192.168.99.111" \
+  -config /etc/nginx/openssl.cnf \
+  -keyout /etc/ssl/private/self-signed.key \
+  -out /etc/ssl/certs/self-signed.crt
 
-RUN adduser -D -g 'www' www
-RUN mkdir /www
-RUN chown -R www:www /var/lib/nginx
-RUN chown -R www:www /www
-RUN mkdir -p /run/nginx
+#ssh setup
+RUN apk add openssh \
+&& echo "www:www" | chpasswd \
+&& echo "I may have changed this message by editing /etc/motd" > /etc/motd \
+&& ssh-keygen -A
 
-COPY id_rsa /etc/ssh/ssh_host_rsa_key
-COPY id_rsa.pub /authorized_keys
-COPY sshd_config /sshd_config
-
+#telegraf setup
 RUN mkdir /etc/telegraf \
 && wget https://dl.influxdata.com/telegraf/releases/telegraf-1.13.3-static_linux_amd64.tar.gz \
 && tar -C . -xzf telegraf-1.13.3-static_linux_amd64.tar.gz \
@@ -25,28 +40,8 @@ RUN mkdir /etc/telegraf \
 && rm -rf /var/cache/apk/*
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 
-RUN adduser -D "user"
-RUN echo "user:password" | chpasswd
-RUN echo "user:password = user:password"
-RUN	mkdir /etc/nginx/ssl
-RUN ssh-keygen -A
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=FR/ST=75/L=Paris/O=42/CN=thverney' -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
-RUN echo 'SSH ft_services/nginx' > /etc/motd
-
-RUN rm /etc/nginx/nginx.conf
-ADD nginx.conf /etc/nginx/nginx.conf
-
-RUN mv -f /sshd_config /etc/ssh/sshd_config \
-&& mkdir .ssh \
-&& mv /authorized_keys .ssh/authorized_keys
-
-RUN chmod 600 /etc/ssh/ssh_host_rsa_key \
-&& chmod 700 .ssh \
-&& chmod 644 .ssh/authorized_keys \
-&& chmod 644 /etc/nginx/ssl/nginx.crt \
-&& chmod 600 /etc/nginx/ssl/nginx.key
-
 COPY run.sh .
+COPY livenessProbe.sh /
 RUN chmod 777 run.sh
 
 EXPOSE 22 80 443

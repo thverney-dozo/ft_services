@@ -68,6 +68,14 @@ spec:
       containers:
       - name: ftps
         image: ftps_alpine
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - pidof telegraf
+          initialDelaySeconds: 30
+          periodSeconds: 2
         volumeMounts:
         - name: ftps-pv
           mountPath: /home

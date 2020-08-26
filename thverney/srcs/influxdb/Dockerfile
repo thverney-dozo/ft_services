@@ -12,7 +12,7 @@ RUN mkdir /etc/telegraf \
 && rm -rf /var/cache/apk/*
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY setup.sh /
+COPY start.sh /
 EXPOSE 8086
 
-CMD bash /setup.sh
+CMD bash /start.sh

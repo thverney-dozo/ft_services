@@ -1,13 +1,19 @@
 FROM alpine:3.11.3
 
-RUN apk update && \
-	apk add mysql mysql-client && \
-	rm -rf /var/cache/apk/*
+RUN apk update \
+&& apk add --no-cache mysql mysql-client mariadb-server-utils bash \
+&& rm -rf /var/cache/apk/*
 
 RUN	touch mysql
 RUN mkdir auth_pam_tool_dir
 RUN mkdir /auth_pam_tool_dir/auth_pam_tool
 RUN touch wordpress.sql
+
+
+COPY start.sh /bin/start.sh
+COPY my.cnf /etc/mysql/my.cnf
+COPY my.cnf /etc/my.cnf
+COPY my.cnf /var/lib/mysql/my.cnf
 
 RUN mkdir /etc/telegraf \
 && wget https://dl.influxdata.com/telegraf/releases/telegraf-1.13.3-static_linux_amd64.tar.gz \
@@ -16,11 +22,6 @@ RUN mkdir /etc/telegraf \
 && cp telegraf/telegraf /usr/bin/ \
 && rm -rf /var/cache/apk/*
 COPY telegraf.conf /etc/telegraf/telegraf.conf
-
-COPY start.sh /bin/start.sh
-COPY my.cnf /etc/mysql/my.cnf
-COPY my.cnf /etc/my.cnf
-COPY my.cnf /var/lib/mysql/my.cnf
 
 EXPOSE 3306
 

@@ -4,11 +4,27 @@ RED='\033[0;31m'
 BLUE='\033[0;36m'
 NC='\033[0m' # No Color
 
-minikube config set vm-driver virtualbox
+if ! minikube status >/dev/null 2>&1
+then
+    if [[ $OSTYPE == "darwin"* ]]
+    then
+        if ! minikube start --vm-driver=virtualbox --cpus 3 --disk-size=30000mb --memory=3000mb --bootstrapper=kubeadm
+        then
+            echo Cannot start minikube!
+            exit 1
+        fi
+    else
+      if ! minikube start --vm-driver=docker --bootstrapper=kubeadm
+        then
+            echo Cannot start minikube!
+            exit 1
+        fi
+	fi
+fi
 
-minikube start --cpus=2 --memory 4000 --disk-size 11000 --extra-config=apiserver.service-node-port-range=1-35000
 minikube addons enable dashboard
 minikube addons enable metallb
+minikube addons enable metrics-server
 
 printf "${RED}✓	Minikube start successful${NC}\n"
 
@@ -19,21 +35,15 @@ docker build -t mysql_alpine srcs/mysql/
 docker build -t phpmyadmin_alpine srcs/phpmyadmin/
 docker build -t wordpress_alpine srcs/wordpress/
 docker build -t grafana_alpine srcs/grafana/
-docker build -t ftps_alpine srcs/ftps
 docker build -t influxdb_alpine srcs/influxdb/
+docker build -t ftps_alpine srcs/ftps
+
 printf "${RED}✓   All docker build successful${NC}\n"
 
 
 kubectl apply -k srcs
 kubectl describe cm config -n metallb-system
-# kubectl apply -f srcs/metallb-config.yaml
-# kubectl apply -f srcs/nginx-deployment.yaml
-# kubectl apply -f srcs/mysql.yaml
-# kubectl apply -f srcs/phpmyadmin.yaml
-# kubectl apply -f srcs/wordpress.yaml
-# kubectl delete --all deployments
-# kubectl delete --all pods
-# kubectl delete --all services
-# kubectl delete --all pvc
 
 printf "${RED}✓  All yaml successfuly applied${NC}\n"
+
+minikube dashboard

@@ -49,6 +49,14 @@ spec:
       - image: mysql_alpine
         name: mysql
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - pidof telegraf
+          initialDelaySeconds: 30
+          periodSeconds: 2
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: password

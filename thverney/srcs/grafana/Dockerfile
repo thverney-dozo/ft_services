@@ -8,6 +8,11 @@ RUN apk update && apk add bash curl wget grafana \
 
 COPY datasources/datasource.yaml /usr/share/grafana/conf/provisioning/datasources/
 
+RUN mkdir /usr/share/grafana/conf/provisioning/dashboards/mine
+COPY dashboards/mine/*.json /usr/share/grafana/conf/provisioning/dashboards/mine/
+COPY dashboards/sample.yaml /usr/share/grafana/conf/provisioning/dashboards/
+
+#telegraf setup
 RUN mkdir /etc/telegraf \
 && wget https://dl.influxdata.com/telegraf/releases/telegraf-1.13.3-static_linux_amd64.tar.gz \
 && tar -C . -xzf telegraf-1.13.3-static_linux_amd64.tar.gz \
@@ -16,7 +21,7 @@ RUN mkdir /etc/telegraf \
 && rm -rf /var/cache/apk/*
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY setup.sh /
+COPY start.sh /
 EXPOSE 3000
 
-CMD bash /setup.sh
+CMD bash /start.sh

@@ -5,5 +5,5 @@ resources:
 - phpmyadmin.yaml
 - wordpress.yaml
 - grafana.yaml
-- ftps.yaml
 - influxdb.yaml
+- ftps.yaml
