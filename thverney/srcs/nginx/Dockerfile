@@ -41,7 +41,6 @@ RUN mkdir /etc/telegraf \
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 
 COPY run.sh .
-COPY livenessProbe.sh /
 RUN chmod 777 run.sh
 
 EXPOSE 22 80 443

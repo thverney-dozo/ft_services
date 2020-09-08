@@ -1,9 +1,5 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-BLUE='\033[0;36m'
-NC='\033[0m' # No Color
-
 if ! minikube status >/dev/null 2>&1
 then
     if [[ $OSTYPE == "darwin"* ]]
@@ -15,18 +11,38 @@ then
         fi
     else
       if ! minikube start --vm-driver=docker --bootstrapper=kubeadm
-        then
+        then 
             echo Cannot start minikube!
             exit 1
-        fi
-	fi
+    fi
+fi
+fi
+
+if [[ $OSTYPE == "darwin"* ]]
+then
+	cp srcs/metallb-mac.yaml srcs/metallb-config.yaml
+elif [[ $OSTYPE == "linux-gnu"* ]]
+then
+	cp srcs/metallb-linux.yaml srcs/metallb-config.yaml
+fi
+
+if [[ $OSTYPE == "darwin"* ]]
+then
+	cp srcs/wordpress/which/mac.sql srcs/wordpress/wordpress.sql
+elif [[ $OSTYPE == "linux-gnu"* ]]
+then
+	cp srcs/wordpress/which/linux.sql srcs/wordpress/wordpress.sql
 fi
 
 minikube addons enable dashboard
 minikube addons enable metallb
 minikube addons enable metrics-server
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+kubectl delete deployments --all
+kubectl delete svc --all
 
-printf "${RED}✓	Minikube start successful${NC}\n"
 
 eval $(minikube docker-env)
 
@@ -38,12 +54,11 @@ docker build -t grafana_alpine srcs/grafana/
 docker build -t influxdb_alpine srcs/influxdb/
 docker build -t ftps_alpine srcs/ftps
 
-printf "${RED}✓   All docker build successful${NC}\n"
-
 
 kubectl apply -k srcs
 kubectl describe cm config -n metallb-system
-
-printf "${RED}✓  All yaml successfuly applied${NC}\n"
+rm -rf srcs/metallb-config.yaml
+rm -rf srcs/wordpress/wordpress.sql
 
 minikube dashboard
+

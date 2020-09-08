@@ -44,14 +44,6 @@ spec:
       - image: nginx_alpine
         imagePullPolicy: Never
         name: nginx
-        livenessProbe:
-          exec:
-            command:
-            - /bin/bash
-            - -c
-            - pidof telegraf
-          initialDelaySeconds: 30
-          periodSeconds: 2
         ports:
         - containerPort: 80
           name: http
