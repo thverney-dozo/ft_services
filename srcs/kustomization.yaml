@@ -1,0 +1,9 @@
+resources: 
+- metallb-config.yaml
+- mysql.yaml
+- nginx.yaml
+- phpmyadmin.yaml
+- wordpress.yaml
+- grafana.yaml
+- influxdb.yaml
+- ftps.yaml
