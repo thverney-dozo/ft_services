@@ -11,4 +11,7 @@ GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
 mysqld --user=$MYSQL_USER --bootstrap --verbose=0 --skip-grant-tables=0 < admin.sql
-exec /usr/bin/mysqld --user=$MYSQL_USER --console
+/usr/bin/mysqld --user=$MYSQL_USER --console &
+while pgrep mysqld >/dev/null && pgrep telegraf >/dev/null; do
+    sleep 1;
+done
